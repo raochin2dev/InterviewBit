@@ -1,0 +1,39 @@
+public class Solution {
+	public void rotate(ArrayList<ArrayList<Integer>> a) {
+	    int curRow = 0,curCol = 0;
+        int val=a.get(curRow).get(curCol);
+        int cnt = a.size() * a.size();
+	    ArrayList<ArrayList<Integer>> res = rotateInPlace(a,curRow,curCol,val,cnt,4,0);
+	    
+	}
+	
+	public static ArrayList<ArrayList<Integer>> rotateInPlace(ArrayList<ArrayList<Integer>> a,int curRow,int curCol,int val,int cnt,int cnt2,int level){
+	    ArrayList<ArrayList<Integer>> res = new ArrayList<ArrayList<Integer>>();
+	    if(cnt == 0){
+	       res = a;
+	    }
+	    else{
+               if(cnt2 == 0){
+                   cnt2 = 4; 
+                   curCol += 1;
+                   if(curCol == a.get(0).size()-level-1){
+                       level++;
+                       curCol = level;
+                       curRow = level;
+                   }
+                   val = a.get(curRow).get(curCol);
+               }
+                
+	       int newRow = curCol;
+	       int newCol = a.size()-1-curRow;
+	       int tempVal = a.get(newRow).get(newCol);
+	       //Update the value of current element to new position
+	       a.get(newRow).set(newCol,val);
+	       
+	       res = rotateInPlace(a,newRow,newCol,tempVal,--cnt,--cnt2,level);
+               
+	    }
+	     
+	    return res;
+    }
+}
